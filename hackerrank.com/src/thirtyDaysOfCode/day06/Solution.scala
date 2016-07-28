@@ -1,4 +1,4 @@
-package thirty.days.of.code
+package thirtyDaysOfCode.day06
 
 /**
   * Created by ruatvv2 on 26.07.16.
