@@ -6,8 +6,7 @@ package thirtyDaysOfCode.day25
 object Solution {
 
   def isPrime(n: Int) =
-    if (n == 1) "Not prime"
-    else if (n > 1 && (Iterator.from(2) takeWhile (i => i < Math.sqrt(n).toInt) exists (n % _ == 0))) "Not prime" else "Prime"
+    if (n > 1 && (Iterator.from(2) takeWhile (i => i < Math.sqrt(n).toInt) forall (n % _ != 0))) "Prime" else "Not prime"
 
   def main(args: Array[String]) {
     val in = new java.util.Scanner(System.in)
