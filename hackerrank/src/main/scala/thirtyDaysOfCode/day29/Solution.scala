@@ -6,13 +6,21 @@ package thirtyDaysOfCode.day29
   */
 object Solution {
 
-  def getBitAndMax(N: Int, K: Int): Int = {
+/*  def getBitAndMax(N: Int, K: Int): Int = {
     (for {
       i <- 1 to N
       j <- 1 to N
     } yield (i, j))
       .filter(p => p._1 != p._2 && p._1 < p._2)
       .map(p => p._1 & p._2)
+      .sorted
+      .takeWhile(_ < K).last
+  }*/
+
+  def getBitAndMax(N: Int, K: Int): Int = {
+    (1 to N).combinations(2).map(v => (v.head, v.tail.head))
+      .filter(p => p._1 != p._2 && p._1 < p._2)
+      .map(p => p._1 & p._2).toList
       .sorted
       .takeWhile(_ < K).last
   }
@@ -27,5 +35,6 @@ object Solution {
     }
     pairs.map(e => getBitAndMax(e._1,e._2)).foreach(println)
   }
+
 }
 
