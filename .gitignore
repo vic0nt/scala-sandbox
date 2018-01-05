@@ -4,3 +4,5 @@ hackerrank/target/
 /misc/misc.iml
 /euler/target/
 /misc/target/
+/fpInScalaBook/target/
+*.iml
