@@ -6,3 +6,4 @@ hackerrank/target/
 /misc/target/
 /fpInScalaBook/target/
 *.iml
+/scala-fp/target/
