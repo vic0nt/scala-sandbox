@@ -49,6 +49,19 @@ object List {
       case Cons(x, xs) => f(x, foldRight(xs, z)(f))
     }
 
+  def append[A](a1: List[A], a2: List[A]): List[A] =
+    a1 match {
+      case Nil => a2
+      case Cons(h,t) => Cons(h, append(t, a2))
+    }
+
+  def init[A](l: List[A]): List[A] =
+    l match {
+      case Nil ⇒ l
+      case Cons(x, Cons(_, Nil)) ⇒ Cons(x, Nil)
+      case Cons(x, xs) ⇒ Cons(x, init(xs))
+    }
+
   val example = Cons(1, Cons(2, Cons(3, Nil)))
   val example2 = List(1, 2, 3)
   val total = sum(example)
