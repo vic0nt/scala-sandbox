@@ -1,5 +1,7 @@
 package ch3
 
+import scala.annotation.tailrec
+
 sealed trait List[+A]
 
 case object Nil extends List[Nothing]
@@ -49,6 +51,13 @@ object List {
       case Cons(x, xs) => f(x, foldRight(xs, z)(f))
     }
 
+  @tailrec
+  def foldLeft[A,B](as: List[A], z: B)(f: (B, A) => B): B = as match {
+    case Nil => z
+    case Cons(x, xs) => foldLeft(xs, f(z,x))(f)
+  }
+
+
   def append[A](a1: List[A], a2: List[A]): List[A] =
     a1 match {
       case Nil => a2
@@ -61,6 +70,10 @@ object List {
       case Cons(x, Cons(_, Nil)) ⇒ Cons(x, Nil)
       case Cons(x, xs) ⇒ Cons(x, init(xs))
     }
+
+  def length[A](as: List[A]): Int = List.foldRight(as,0)((_,b) ⇒ b + 1)
+
+  def reverse[A](as: List[A]): List[A] = List.foldLeft(as, Nil:List[A])((a,b) ⇒ Cons(b,a))
 
   val example = Cons(1, Cons(2, Cons(3, Nil)))
   val example2 = List(1, 2, 3)
