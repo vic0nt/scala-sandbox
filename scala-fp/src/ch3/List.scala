@@ -79,6 +79,8 @@ object List {
 
   def reverse[A](as: List[A]): List[A] = foldLeft(as, Nil:List[A])((a,b) ⇒ Cons(b,a))
 
+  def concatenate[A](as: List[List[A]]): List[A] = foldRight(as, Nil:List[A])(append)
+
   val example = Cons(1, Cons(2, Cons(3, Nil)))
   val example2 = List(1, 2, 3)
   val total = sum(example)
