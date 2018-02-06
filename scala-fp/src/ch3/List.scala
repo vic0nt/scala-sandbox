@@ -57,12 +57,16 @@ object List {
     case Cons(x, xs) => foldLeft(xs, f(z,x))(f)
   }
 
+  /* cheating */
+  def foldRight2[A,B](as: List[A], z: B)(f: (A, B) => B): B = foldLeft(reverse(as),z)((a,b) ⇒ f(b,a))
 
   def append[A](a1: List[A], a2: List[A]): List[A] =
     a1 match {
       case Nil => a2
       case Cons(h,t) => Cons(h, append(t, a2))
     }
+
+  def append2[A](a1: List[A], a2: List[A]): List[A] = foldRight(a1, a2)((el, list) ⇒ Cons(el,list))
 
   def init[A](l: List[A]): List[A] =
     l match {
@@ -71,9 +75,9 @@ object List {
       case Cons(x, xs) ⇒ Cons(x, init(xs))
     }
 
-  def length[A](as: List[A]): Int = List.foldRight(as,0)((_,b) ⇒ b + 1)
+  def length[A](as: List[A]): Int = foldRight(as,0)((_,b) ⇒ b + 1)
 
-  def reverse[A](as: List[A]): List[A] = List.foldLeft(as, Nil:List[A])((a,b) ⇒ Cons(b,a))
+  def reverse[A](as: List[A]): List[A] = foldLeft(as, Nil:List[A])((a,b) ⇒ Cons(b,a))
 
   val example = Cons(1, Cons(2, Cons(3, Nil)))
   val example2 = List(1, 2, 3)
