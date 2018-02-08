@@ -81,6 +81,31 @@ object List {
 
   def concatenate[A](as: List[List[A]]): List[A] = foldRight(as, Nil:List[A])(append)
 
+  def map[A,B](as: List[A])(f: A => B): List[B] = List.foldRight(as, Nil:List[B])((h, t) => Cons(f(h), t))
+
+  def mapMutable[A,B](l: List[A])(f: A => B): List[B] = {
+    val buf = new collection.mutable.ListBuffer[B]
+    def go(l: List[A]): Unit = l match {
+      case Nil => ()
+      case Cons(h,t) => buf += f(h); go(t)
+    }
+    go(l)
+    List(buf.toList: _*)
+  }
+
+  def filter[A](as: List[A])(f: A => Boolean): List[A] =
+    foldLeft(reverse(as), Nil:List[A])((list,el) ⇒ if (f(el)) Cons(el, list) else list)
+
+  def filterMutable[A](l: List[A])(f: A => Boolean): List[A] = {
+    val buf = new collection.mutable.ListBuffer[A]
+    def go(l: List[A]): Unit = l match {
+      case Nil => ()
+      case Cons(h,t) => if (f(h)) buf += h; go(t)
+    }
+    go(l)
+    List(buf.toList: _*)
+  }
+
   val example = Cons(1, Cons(2, Cons(3, Nil)))
   val example2 = List(1, 2, 3)
   val total = sum(example)
