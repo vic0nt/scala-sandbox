@@ -124,23 +124,33 @@ object List {
       case (Cons(h1, t1), Cons(h2, t2)) ⇒ go(t1, t2, Cons(h1 + h2, acc))
       case _ ⇒ acc
     }
+
     reverse(go(l1, l2, Nil: List[Int]))
   }
 
-  def zipWith[A](l1: List[A], l2: List[A])(f: (A,A) ⇒ A): List[A] = {
+  def zipWith[A](l1: List[A], l2: List[A])(f: (A, A) ⇒ A): List[A] = {
     @tailrec
     def go(l1: List[A], l2: List[A], acc: List[A]): List[A] = (l1, l2) match {
-      case (Cons(h1, t1), Cons(h2, t2)) ⇒ go(t1, t2, Cons(f(h1,h2), acc))
+      case (Cons(h1, t1), Cons(h2, t2)) ⇒ go(t1, t2, Cons(f(h1, h2), acc))
       case _ ⇒ acc
     }
+
     reverse(go(l1, l2, Nil: List[A]))
   }
 
   /* Ex.22 - canonical answer */
-  def addPairwise(a: List[Int], b: List[Int]): List[Int] = (a,b) match {
+  def addPairwise(a: List[Int], b: List[Int]): List[Int] = (a, b) match {
     case (Nil, _) => Nil
     case (_, Nil) => Nil
-    case (Cons(h1,t1), Cons(h2,t2)) => Cons(h1+h2, addPairwise(t1,t2))
+    case (Cons(h1, t1), Cons(h2, t2)) => Cons(h1 + h2, addPairwise(t1, t2))
+  }
+
+  def hasSubsequence[A](sup: List[A], sub: List[A]): Boolean = {
+    def go(sup: List[A], sub: List[A], acc: Boolean): Boolean = (sup, sub) match {
+      case (Cons(h1, t1), b @ Cons(h2, t2)) ⇒ if (h1 == h2) go(t1, t2, true) else go(t1, b, false)
+      case _ ⇒ acc
+    }
+    go(sup, sub, acc = false)
   }
 
   val example = Cons(1, Cons(2, Cons(3, Nil)))
