@@ -5,12 +5,11 @@ package main.scala.fp.stringPermute
   */
 object Solution extends App {
   def permute(s: String) = {
-    def permute_(s: List[Char], acc: List[Char]): List[Char] = {
+    def permute_(s: List[Char], acc: List[Char]): List[Char] =
       s match {
         case Nil => acc
         case x :: y :: tail => permute_(tail, x :: y :: acc)
       }
-    }
     permute_(s.toList, Nil).reverse.mkString
   }
 
